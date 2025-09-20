@@ -37,7 +37,9 @@ appstore_build_directory=$(CURDIR)/build/artifacts/appstore
 appstore_package_name=$(appstore_build_directory)/$(app_name)
 pnpm=$(shell which pnpm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
-composer_phar=build/tools/composer.phar
+composer_phar=$(build_tools_directory)/composer.phar
+pnpm_wrapper=$(build_tools_directory)/pnpm.sh
+pnpm_cmd=$(if $(pnpm),$(pnpm),$(pnpm_wrapper))
 
 # Default target: install deps & build JS (and PHP if composer.json exists)
 all: build
@@ -75,16 +77,33 @@ else
 	$(if $(composer),$(composer),php $(composer_phar)) install --prefer-dist
 endif
 
+# Ensure a local pnpm wrapper exists if pnpm is not installed globally.
+# The wrapper uses Corepack to activate pnpm, then delegates to pnpm.
+$(pnpm_wrapper):
+	@mkdir -p $(build_tools_directory); \
+		echo "#!/usr/bin/env bash" > $(pnpm_wrapper); \
+		echo "set -e" >> $(pnpm_wrapper); \
+		echo "if ! command -v pnpm >/dev/null 2>&1; then" >> $(pnpm_wrapper); \
+		echo "  if command -v corepack >/dev/null 2>&1; then" >> $(pnpm_wrapper); \
+		echo "    corepack enable >/dev/null 2>&1 || true" >> $(pnpm_wrapper); \
+		echo "    corepack prepare pnpm@latest --activate" >> $(pnpm_wrapper); \
+		echo "  else" >> $(pnpm_wrapper); \
+		echo "    echo 'pnpm not found and corepack not available. Please install pnpm or Node.js (with corepack).'; exit 1" >> $(pnpm_wrapper); \
+		echo "  fi" >> $(pnpm_wrapper); \
+		echo "fi" >> $(pnpm_wrapper); \
+		echo "exec pnpm \"\$$@\"" >> $(pnpm_wrapper); \
+		chmod +x $(pnpm_wrapper)
+
 # pnpm:
 #   - Install JS deps (frozen lockfile)
 #   - Run build via root package.json if present, else fallback to js/ subdir
 .PHONY: pnpm
-pnpm:
-	pnpm install --frozen-lockfile
+pnpm: $(pnpm_wrapper)
+	$(pnpm_cmd) install --frozen-lockfile
 ifeq (,$(wildcard $(CURDIR)/package.json))
-	cd js && $(pnpm) build
+	cd js && $(pnpm_cmd) build
 else
-	pnpm build
+	$(pnpm_cmd) build
 endif
 
 # clean:
@@ -178,8 +197,8 @@ test: composer
 # lint:
 #   - Lint JS via pnpm and PHP via composer script "lint"
 .PHONY: lint
-lint:
-	pnpm lint
+lint: $(pnpm_wrapper)
+	$(pnpm_cmd) lint
 	$(composer_phar) run lint
 
 # php-cs-fixer:
@@ -199,8 +218,8 @@ php-cs-fixer:
 # format:
 #   - Format JS and PHP (composer script "cs:fix")
 .PHONY: format
-format:
-	pnpm format
+format: $(pnpm_wrapper)
+	$(pnpm_cmd) format
 	PHP_CS_FIXER_IGNORE_ENV=true $(composer_phar) run cs:fix
 
 # openapi:
