@@ -10,10 +10,10 @@ use OCP\Settings\ISettings;
 use OCP\Util;
 
 class Admin implements ISettings {
-	private IL10N $l;
-	private IAppConfig $config;
-
-	public function __construct(IAppConfig $config, IL10N $l) {
+	public function __construct(
+		private IAppConfig $config,
+		private IL10N $l,
+	) {
 		$this->config = $config;
 		$this->l = $l;
 	}

@@ -25,8 +25,6 @@ Enter your app description here.
 	<bugs>https://github.com/your-user/nextcloud-nextcloudapptemplate/issues</bugs>
 	<repository>https://github.com/your-user/nextcloud-nextcloudapptemplate</repository>
 	<screenshot>https://raw.githubusercontent.com/your-user/nextcloud-nextcloudapptemplate/refs/heads/master/promo.png</screenshot>
-	<donation>https://ko-fi.com/casraf</donation>
-	<donation type="paypal"><![CDATA[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TSH3C3ABGQM22&currency_code=ILS&source=url]]></donation>
 	<dependencies>
 		<nextcloud min-version="29" max-version="32"/>
 	</dependencies>

@@ -15,17 +15,11 @@ use OCP\IL10N;
 use OCP\IRequest;
 
 final class ApiController extends OCSController {
-	/** @var IAppConfig */
-	private $config;
-
-	/** @var IL10N */
-	private $l10n;
-
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		IAppConfig $config,
-		IL10N $l10n,
+		private IAppConfig $config,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request);
 		$this->config = $config;

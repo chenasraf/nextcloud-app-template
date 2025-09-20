@@ -107,7 +107,7 @@
       <form @submit.prevent @submit="save">
         <div class="row gap-16 align-center">
           <NcButton @click="fetchHello" :disabled="loading">{{ strings.fetchHello }}</NcButton>
-          <NcButton native-type="submit" :disabled="loading">{{ strings.save }}</NcButton>
+          <NcButton :disabled="loading" @click="submit">{{ strings.save }}</NcButton>
 
           <span>
             <span v-if="loading">{{ strings.loading }}</span>
