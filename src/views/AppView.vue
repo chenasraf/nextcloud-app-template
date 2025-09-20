@@ -4,8 +4,14 @@
     <div class="toolbar">
       <div class="toolbar-left">
         <div style="max-width: 320px">
-          <NcTextField v-model="search" :label="strings.searchLabel" :placeholder="strings.searchPlaceholder"
-            trailing-button-icon="close" :show-trailing-button="search !== ''" @trailing-button-click="clearSearch" />
+          <NcTextField
+            v-model="search"
+            :label="strings.searchLabel"
+            :placeholder="strings.searchPlaceholder"
+            trailing-button-icon="close"
+            :show-trailing-button="search !== ''"
+            @trailing-button-click="clearSearch"
+          />
         </div>
         <NcButton @click="refresh" :disabled="loading">{{ strings.refresh }}</NcButton>
       </div>
@@ -27,11 +33,19 @@
       <h3 class="card-title">{{ strings.formHeader }}</h3>
       <div class="row gap-16 align-start">
         <div style="max-width: 260px">
-          <NcTextField v-model="name" :label="strings.nameInputLabel" :placeholder="strings.nameInputPlaceholder" />
+          <NcTextField
+            v-model="name"
+            :label="strings.nameInputLabel"
+            :placeholder="strings.nameInputPlaceholder"
+          />
         </div>
 
         <div style="max-width: 220px">
-          <NcSelect v-model="themeLabel" :options="themeOptionsLabels" :input-label="strings.themeLabel" />
+          <NcSelect
+            v-model="themeLabel"
+            :options="themeOptionsLabels"
+            :input-label="strings.themeLabel"
+          />
         </div>
 
         <div class="row gap-8 align-center">
@@ -56,8 +70,12 @@
     </div>
 
     <!-- Empty state -->
-    <NcEmptyContent v-else-if="filteredHellos.length === 0" :title="strings.emptyTitle" :description="strings.emptyDesc"
-      class="mt-16">
+    <NcEmptyContent
+      v-else-if="filteredHellos.length === 0"
+      :title="strings.emptyTitle"
+      :description="strings.emptyDesc"
+      class="mt-16"
+    >
       <template #action>
         <NcButton @click="seedOne">{{ strings.addExample }}</NcButton>
       </template>
@@ -94,7 +112,9 @@
 
       <!-- Footer actions -->
       <div class="row gap-12 mt-12">
-        <NcButton type="secondary" @click="refresh" :disabled="loading">{{ strings.refresh }}</NcButton>
+        <NcButton type="secondary" @click="refresh" :disabled="loading">{{
+          strings.refresh
+        }}</NcButton>
         <NcButton type="secondary" @click="clearAll" :disabled="loading || hellos.length === 0">
           {{ strings.clearAll }}
         </NcButton>
