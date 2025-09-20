@@ -1,13 +1,9 @@
 import App from './App.vue'
 import './style.scss'
 import { createApp } from 'vue'
-import axios from '@nextcloud/axios'
-import { generateOcsUrl } from '@nextcloud/router'
+import { http } from './axios'
 import router from './router'
 
-const baseURL = generateOcsUrl('/apps/nextcloudapptemplate/api')
-axios.defaults.baseURL = baseURL
-
 console.log('[DEBUG] Mounting NextcloudAppTemplate app')
-console.log('[DEBUG] Base URL:', baseURL)
+console.log('[DEBUG] Base URL:', http.defaults.baseURL)
 createApp(App).use(router).mount('#nextcloudapptemplate-app')

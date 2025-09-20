@@ -137,7 +137,7 @@ import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 
-import axios from '@nextcloud/axios'
+import { ocs } from '@/axios'
 import { t, n } from '@nextcloud/l10n'
 
 export default {
@@ -319,11 +319,10 @@ export default {
       try {
         this.loading = true
         // Example GET -> /hello  (expects: { ocs: { data: { message: string, at: string }}})
-        const resp = await axios.get('/hello')
-        const data = resp.data?.ocs?.data ?? {}
-        this.serverMessage = data.message ?? '👋'
+        const resp = await ocs.get('/hello')
+        this.serverMessage = resp.data.message ?? '👋'
         // If backend returns ISO date strings, store a Date instance
-        if (data.at) this.lastHelloAt = new Date(data.at)
+        if (resp.data.at) this.lastHelloAt = new Date(resp.data.at)
       } catch (e) {
         console.error('Failed to fetch hello', e)
       } finally {
@@ -340,11 +339,10 @@ export default {
           items: this.items.map((x) => x.label),
           counter: this.counter,
         }
-        const resp = await axios.post('/hello', { data: payload })
-        const data = resp.data?.ocs?.data ?? {}
+        const resp = await ocs.post('/hello', { data: payload })
         // Update preview/message
-        if (data.message) this.serverMessage = data.message
-        if (data.at) this.lastHelloAt = new Date(data.at)
+        if (resp.data.message) this.serverMessage = resp.data.message
+        if (resp.data.at) this.lastHelloAt = new Date(resp.data.at)
       } catch (e) {
         console.error('Failed to save hello', e)
       } finally {

@@ -126,7 +126,6 @@
 <script>
 /**
  * Inner view rendered inside AppUserWrapper via <router-view>.
- * Matches your style: Options API, Nextcloud UI, axios, i18n placeholders.
  * Uses the Hello controller (GET/POST /hello).
  */
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -137,7 +136,7 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 
-import axios from '@nextcloud/axios'
+import { ocs } from '@/axios'
 import { t, n } from '@nextcloud/l10n'
 
 export default {
@@ -251,8 +250,8 @@ export default {
       try {
         this.loading = true
         // GET /hello -> { ocs: { data: { message, at } } }
-        const resp = await axios.get('/hello')
-        const data = resp?.data?.ocs?.data ?? {}
+        const resp = await ocs.get('/hello')
+        const data = resp.data
         if (data?.message) {
           this.hellos.unshift({
             id: genId(),
@@ -279,8 +278,8 @@ export default {
           counter: 0,
         }
         // POST /hello -> { ocs: { data: { message, at } } }
-        const resp = await axios.post('/hello', { data: payload })
-        const data = resp?.data?.ocs?.data ?? {}
+        const resp = await ocs.post('/hello', { data: payload })
+        const data = resp.data
         const message = data?.message ?? `Hello, ${name}!`
         const at = data?.at ?? new Date().toISOString()
         this.hellos.unshift({ id: genId(), message, at })
