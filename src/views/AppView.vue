@@ -163,10 +163,10 @@ export default {
       name: '',
       themeLabel: null,
       themeOptions: [
-        { label: t('nextcloud-hello-world', 'Light'), value: 'light' },
-        { label: t('nextcloud-hello-world', 'Dark'), value: 'dark' },
+        { label: t('nextcloudapptemplate', 'Light'), value: 'light' },
+        { label: t('nextcloudapptemplate', 'Dark'), value: 'dark' },
         {
-          label: n('nextcloud-hello-world', 'System (1 option)', 'System (%n options)', 2),
+          label: n('nextcloudapptemplate', 'System (1 option)', 'System (%n options)', 2),
           value: 'system',
         },
       ],
@@ -176,15 +176,15 @@ export default {
 
       strings: {
         // Toolbar
-        searchLabel: t('nextcloud-hello-world', 'Search'),
-        searchPlaceholder: t('nextcloud-hello-world', 'Filter messages…'),
-        refresh: t('nextcloud-hello-world', 'Refresh'),
-        showForm: t('nextcloud-hello-world', 'Show form'),
-        hideForm: t('nextcloud-hello-world', 'Hide form'),
+        searchLabel: t('nextcloudapptemplate', 'Search'),
+        searchPlaceholder: t('nextcloudapptemplate', 'Filter messages…'),
+        refresh: t('nextcloudapptemplate', 'Refresh'),
+        showForm: t('nextcloudapptemplate', 'Show form'),
+        hideForm: t('nextcloudapptemplate', 'Hide form'),
 
         // Info
         quickHelp: t(
-          'nextcloud-hello-world',
+          'nextcloudapptemplate',
           'Use the form to post a hello. The list shows recent hellos fetched from the server. All user-visible text is centralized in {cStart}strings{cEnd}.',
           { cStart: '<code>', cEnd: '</code>' },
           undefined,
@@ -192,26 +192,26 @@ export default {
         ),
 
         // Form
-        formHeader: t('nextcloud-hello-world', 'Say hello'),
-        nameInputLabel: t('nextcloud-hello-world', 'Name'),
-        nameInputPlaceholder: t('nextcloud-hello-world', 'e.g. Ada'),
-        themeLabel: t('nextcloud-hello-world', 'Theme'),
-        add: t('nextcloud-hello-world', 'Add'),
-        clear: t('nextcloud-hello-world', 'Clear'),
-        livePreview: t('nextcloud-hello-world', 'Preview:'),
+        formHeader: t('nextcloudapptemplate', 'Say hello'),
+        nameInputLabel: t('nextcloudapptemplate', 'Name'),
+        nameInputPlaceholder: t('nextcloudapptemplate', 'e.g. Ada'),
+        themeLabel: t('nextcloudapptemplate', 'Theme'),
+        add: t('nextcloudapptemplate', 'Add'),
+        clear: t('nextcloudapptemplate', 'Clear'),
+        livePreview: t('nextcloudapptemplate', 'Preview:'),
 
         // List
-        loading: t('nextcloud-hello-world', 'Loading…'),
-        emptyTitle: t('nextcloud-hello-world', 'No hellos yet'),
-        emptyDesc: t('nextcloud-hello-world', 'Try adding one using the form above.'),
-        addExample: t('nextcloud-hello-world', 'Add example'),
-        colMessage: t('nextcloud-hello-world', 'Message'),
-        colAt: t('nextcloud-hello-world', 'Time'),
-        colActions: t('nextcloud-hello-world', 'Actions'),
-        duplicate: t('nextcloud-hello-world', 'Duplicate'),
-        remove: t('nextcloud-hello-world', 'Remove'),
-        clearAll: t('nextcloud-hello-world', 'Clear all'),
-        never: t('nextcloud-hello-world', 'Never'),
+        loading: t('nextcloudapptemplate', 'Loading…'),
+        emptyTitle: t('nextcloudapptemplate', 'No hellos yet'),
+        emptyDesc: t('nextcloudapptemplate', 'Try adding one using the form above.'),
+        addExample: t('nextcloudapptemplate', 'Add example'),
+        colMessage: t('nextcloudapptemplate', 'Message'),
+        colAt: t('nextcloudapptemplate', 'Time'),
+        colActions: t('nextcloudapptemplate', 'Actions'),
+        duplicate: t('nextcloudapptemplate', 'Duplicate'),
+        remove: t('nextcloudapptemplate', 'Remove'),
+        clearAll: t('nextcloudapptemplate', 'Clear all'),
+        never: t('nextcloudapptemplate', 'Never'),
       },
     }
   },

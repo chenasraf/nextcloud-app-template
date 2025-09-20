@@ -1,5 +1,5 @@
 <template>
-  <div id="nextcloud-hello-world-content" class="section">
+  <div id="nextcloudapptemplate-content" class="section">
     <h2>{{ strings.title }}</h2>
 
     <!-- Information / quick start -->
@@ -161,10 +161,10 @@ export default {
       // Example: select with label <-> value mapping (like your intervals)
       themeLabel: null,
       themeOptions: [
-        { label: t('nextcloud-hello-world', 'Light'), value: 'light' },
-        { label: t('nextcloud-hello-world', 'Dark'), value: 'dark' },
+        { label: t('nextcloudapptemplate', 'Light'), value: 'light' },
+        { label: t('nextcloudapptemplate', 'Dark'), value: 'dark' },
         {
-          label: n('nextcloud-hello-world', 'System (1 option)', 'System (%n options)', 2),
+          label: n('nextcloudapptemplate', 'System (1 option)', 'System (%n options)', 2),
           value: 'system',
         },
       ],
@@ -183,15 +183,15 @@ export default {
       // All user-visible strings go here
       strings: {
         // Titles / headers
-        title: t('nextcloud-hello-world', 'Hello World — App Template'),
-        infoTitle: t('nextcloud-hello-world', 'Information'),
-        examplesHeader: t('nextcloud-hello-world', 'Quick Examples'),
-        itemsHeader: t('nextcloud-hello-world', 'Editable List'),
-        backendHeader: t('nextcloud-hello-world', 'Backend Calls'),
+        title: t('nextcloudapptemplate', 'Hello World — App Template'),
+        infoTitle: t('nextcloudapptemplate', 'Information'),
+        examplesHeader: t('nextcloudapptemplate', 'Quick Examples'),
+        itemsHeader: t('nextcloudapptemplate', 'Editable List'),
+        backendHeader: t('nextcloudapptemplate', 'Backend Calls'),
 
         // Info
         infoIntro: t(
-          'nextcloud-hello-world',
+          'nextcloudapptemplate',
           'This view shows {bStart}small, focused examples{bEnd} for inputs, lists, selections, and backend calls.',
           { bStart: '<b>', bEnd: '</b>' },
           undefined,
@@ -200,21 +200,21 @@ export default {
 
         gettingStartedList: [
           t(
-            'nextcloud-hello-world',
+            'nextcloudapptemplate',
             'Import UI parts from {cStart}@nextcloud/vue{cEnd} and wire them with {cStart}v-model{cEnd}.',
             { cStart: '<code>', cEnd: '</code>' },
             undefined,
             { escape: false },
           ),
           t(
-            'nextcloud-hello-world',
+            'nextcloudapptemplate',
             'Use {cStart}axios{cEnd} for API calls; return OCS data as needed.',
             { cStart: '<code>', cEnd: '</code>' },
             undefined,
             { escape: false },
           ),
           t(
-            'nextcloud-hello-world',
+            'nextcloudapptemplate',
             'Keep user-facing text in a central {cStart}strings{cEnd} object with {cStart}t/n{cEnd}.',
             { cStart: '<code>', cEnd: '</code>' },
             undefined,
@@ -223,7 +223,7 @@ export default {
         ],
 
         tipsNote: t(
-          'nextcloud-hello-world',
+          'nextcloudapptemplate',
           'Pro tip: keep labels in {cStart}label{cEnd} and values in {cStart}value{cEnd} to simplify mapping.',
           { cStart: '<code>', cEnd: '</code>' },
           undefined,
@@ -231,40 +231,40 @@ export default {
         ),
 
         // Name example
-        nameInputHeader: t('nextcloud-hello-world', 'Your Name'),
-        nameInputLabel: t('nextcloud-hello-world', 'Name'),
-        nameInputPlaceholder: t('nextcloud-hello-world', 'e.g. Ada Lovelace'),
-        livePreview: t('nextcloud-hello-world', 'Live preview:'),
+        nameInputHeader: t('nextcloudapptemplate', 'Your Name'),
+        nameInputLabel: t('nextcloudapptemplate', 'Name'),
+        nameInputPlaceholder: t('nextcloudapptemplate', 'e.g. Ada Lovelace'),
+        livePreview: t('nextcloudapptemplate', 'Live preview:'),
 
         // Theme example
-        themeHeader: t('nextcloud-hello-world', 'Theme'),
-        themeLabel: t('nextcloud-hello-world', 'Choose a theme'),
-        themePreview: t('nextcloud-hello-world', 'Active value:'),
+        themeHeader: t('nextcloudapptemplate', 'Theme'),
+        themeLabel: t('nextcloudapptemplate', 'Choose a theme'),
+        themePreview: t('nextcloudapptemplate', 'Active value:'),
 
         // Counter example
-        counterHeader: t('nextcloud-hello-world', 'Counter'),
-        plus: t('nextcloud-hello-world', '+1'),
-        minus: t('nextcloud-hello-world', '-1'),
+        counterHeader: t('nextcloudapptemplate', 'Counter'),
+        plus: t('nextcloudapptemplate', '+1'),
+        minus: t('nextcloudapptemplate', '-1'),
 
         // Items table
-        newItemLabel: t('nextcloud-hello-world', 'New item'),
-        newItemPlaceholder: t('nextcloud-hello-world', 'e.g. Hello item'),
-        add: t('nextcloud-hello-world', 'Add'),
-        clear: t('nextcloud-hello-world', 'Clear'),
-        tableItem: t('nextcloud-hello-world', 'Item'),
-        tableActions: t('nextcloud-hello-world', 'Actions'),
-        editItemAria: t('nextcloud-hello-world', 'Edit item'),
-        duplicate: t('nextcloud-hello-world', 'Duplicate'),
-        remove: t('nextcloud-hello-world', 'Remove'),
-        noItems: t('nextcloud-hello-world', 'No items yet'),
+        newItemLabel: t('nextcloudapptemplate', 'New item'),
+        newItemPlaceholder: t('nextcloudapptemplate', 'e.g. Hello item'),
+        add: t('nextcloudapptemplate', 'Add'),
+        clear: t('nextcloudapptemplate', 'Clear'),
+        tableItem: t('nextcloudapptemplate', 'Item'),
+        tableActions: t('nextcloudapptemplate', 'Actions'),
+        editItemAria: t('nextcloudapptemplate', 'Edit item'),
+        duplicate: t('nextcloudapptemplate', 'Duplicate'),
+        remove: t('nextcloudapptemplate', 'Remove'),
+        noItems: t('nextcloudapptemplate', 'No items yet'),
 
         // Backend
-        fetchHello: t('nextcloud-hello-world', 'Fetch Hello'),
-        save: t('nextcloud-hello-world', 'Save'),
-        loading: t('nextcloud-hello-world', 'Loading…'),
-        lastHelloAt: t('nextcloud-hello-world', 'Last hello at:'),
-        never: t('nextcloud-hello-world', 'Never'),
-        serverSaid: t('nextcloud-hello-world', 'Server said:'),
+        fetchHello: t('nextcloudapptemplate', 'Fetch Hello'),
+        save: t('nextcloudapptemplate', 'Save'),
+        loading: t('nextcloudapptemplate', 'Loading…'),
+        lastHelloAt: t('nextcloudapptemplate', 'Last hello at:'),
+        never: t('nextcloudapptemplate', 'Never'),
+        serverSaid: t('nextcloudapptemplate', 'Server said:'),
       },
     }
   },
@@ -361,7 +361,7 @@ function cryptoRandom() {
 </script>
 
 <style scoped lang="scss">
-#nextcloud-hello-world-content {
+#nextcloudapptemplate-content {
   h2:first-child {
     margin-top: 0;
   }
