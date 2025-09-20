@@ -112,6 +112,12 @@ endif
 clean:
 	rm -rf ./build
 
+# refresh-autoload:
+#  - Regenerate Composer autoload files (if composer.json exists)
+.PHONY: refresh-autoload
+refresh-autoload: composer
+	$(if $(composer),$(composer),php $(composer_phar)) dump-autoload -o
+
 # distclean:
 #   - Run clean and also remove PHP/JS dependencies
 .PHONY: distclean
