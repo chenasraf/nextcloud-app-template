@@ -237,6 +237,28 @@ openapi:
 	$(if $(composer),$(composer),php $(composer_phar)) run openapi
 	@echo "\x1b[32mOpenAPI documentation generated at build/openapi/openapi.json\x1b[0m"
 
+# csr:
+#	- Generate a new private key and self-signed certificate for signing releases
+#	  and place them in ~/.nextcloud/certificates/$(app_name).{key,csr}
+.PHONY: csr
+csr:
+	@if [ -f "$$HOME/.nextcloud/certificates/$(app_name).key" ] && [ -f "$$HOME/.nextcloud/certificates/$(app_name).csr" ]; then \
+			echo "\x1b[31mPrivate key & CSR already exists at ~/.nextcloud/certificates/$(app_name).{key,csr}\x1b[0m"; \
+		else \
+			echo "\x1b[33mGenerating a new private key and self-signed certificate...\x1b[0m"; \
+			openssl req -nodes -newkey rsa:4096 -keyout $(app_name).key -out $(app_name).csr -subj "/CN=$(app_name)"; \
+			mkdir -p "$$HOME/.nextcloud/certificates" && \
+			mv "$(app_name).key" "$$HOME/.nextcloud/certificates/$(app_name).key" && \
+			mv "$(app_name).csr" "$$HOME/.nextcloud/certificates/$(app_name).csr" || \
+				echo "\x1b[31mError: Could not move key & CSR to ~/.nextcloud/certificates/\x1b[0m"; \
+			echo "\x1b[32mPrivate key saved to ~/.nextcloud/certificates/$(app_name).key"; \
+			echo "\x1b[32mCerticate signing request saved to ~/.nextcloud/certificates/$(app_name).csr"; \
+			echo ""; \
+			echo "Follow the instructions at:"; \
+			echo "https://nextcloudappstore.readthedocs.io/en/latest/developer.html#obtaining-a-certificate"; \
+			echo "to get your app registered and obtain a proper public certificate .crt file.\x1b[0m"; \
+		fi
+
 # sign:
 #   - Print a base64 SHA-512 signature for the release tarball from GitHub.
 #   - Requires a private key at ~/.nextcloud/certificates/$(app_name).key
