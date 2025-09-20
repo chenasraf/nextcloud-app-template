@@ -22,7 +22,7 @@ class Admin implements ISettings {
 	 * @return TemplateResponse
 	 */
 	public function getForm(): TemplateResponse {
-		Util::addScript(Application::APP_ID, Application::JS_DIR . '/nextcloudapptemplate-main');
+		Util::addScript(Application::APP_ID, Application::JS_DIR . '/nextcloudapptemplate-settings');
 		Util::addStyle(Application::APP_ID, Application::CSS_DIR . '/nextcloudapptemplate-style');
 		return new TemplateResponse(Application::APP_ID, 'settings', [], '');
 	}
