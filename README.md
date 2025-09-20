@@ -369,26 +369,24 @@ your app version in **`appinfo/info.xml`** as part of the release process.
 
 ### Useful docs
 
-- Release Please action:
-  [https://github.com/googleapis/release-please](https://github.com/googleapis/release-please)
-- Conventional Commits: [https://www.conventionalcommits.org/](https://www.conventionalcommits.org/)
-- Nextcloud App publishing:
-  [https://docs.nextcloud.com/server/latest/developer_manual/app_publishing/index.html](https://docs.nextcloud.com/server/latest/developer_manual/app_publishing/index.html)
+- [Release Please action](https://github.com/googleapis/release-please)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [Nextcloud App publishing](https://docs.nextcloud.com/server/19/developer_manual/app/publishing.html)
 
 ## Resources
 
 - **Nextcloud app development**
 
-  - [App dev guide](https://docs.nextcloud.com/server/latest/developer_manual/app/)
-  - [OCS API](https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/index.html)
-  - [Publishing to the App Store](https://docs.nextcloud.com/server/latest/developer_manual/app_publishing/index.html)
-  - [App signing](https://docs.nextcloud.com/server/latest/developer_manual/app_publishing/signing.html)
-  - [Server dev environment](https://docs.nextcloud.com/server/latest/developer_manual/general/devenv.html)
+  - [App dev guide](https://nextcloud.com/developer/)
+  - [OCS API](https://docs.nextcloud.com/server/stable/developer_manual/client_apis/OCS/ocs-api-overview.html)
+  - [Publishing to the App Store](https://nextcloudappstore.readthedocs.io/en/latest/developer.html#publishing-apps-on-the-app-store)
+  - [App signing](https://nextcloudappstore.readthedocs.io/en/latest/developer.html#obtaining-a-certificate)
+  - [Server dev environment](https://docs.nextcloud.com/server/latest/developer_manual/getting_started/devenv.html)
 
 - **Nextcloud UI & components**
 
   - [nextcloud-vue (components)](https://github.com/nextcloud/nextcloud-vue)
-  - [Component docs/storybook](https://nextcloud.github.io/nextcloud-vue/)
+  - [Component docs/Style guide](https://next--nextcloud-vue-components.netlify.app)
 
 - **Frontend stack**
 
