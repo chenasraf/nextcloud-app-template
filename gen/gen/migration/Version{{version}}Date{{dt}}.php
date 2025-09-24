@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-/**
- * SPDX-FileCopyrightText: Your Name <casraf@pm.me>
- * SPDX-License-Identifier: AGPL-3.0-or-later
- */
+// SPDX-FileCopyrightText: Your Name <your@email.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\Jukebox\Migration;
+namespace OCA\NextcloudAppTemplate\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;

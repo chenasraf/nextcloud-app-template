@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-// SPDX-FileCopyrightText: Your Name <casraf@pm.me>
+// SPDX-FileCopyrightText: Your Name <your@email.com>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\Jukebox\Command;
+namespace OCA\NextcloudAppTemplate\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
