@@ -38,6 +38,7 @@ appstore_package_name=$(appstore_build_directory)/$(app_name)
 pnpm=$(shell which pnpm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
 composer_phar=$(build_tools_directory)/composer.phar
+composer_bin := $(if $(composer),$(composer),php $(composer_phar))
 pnpm_wrapper=$(build_tools_directory)/pnpm.sh
 pnpm_cmd=$(if $(pnpm),$(pnpm),$(pnpm_wrapper))
 
@@ -59,22 +60,22 @@ ifneq (,$(wildcard $(CURDIR)/js/package.json))
 	make pnpm
 endif
 
+$(composer_phar):
+	@echo "No system composer found; installing local composer.phar"
+	mkdir -p $(build_tools_directory)
+	curl -sS https://getcomposer.org/installer | php
+	mv composer.phar $(composer_phar)
+
 # composer:
 #   - Use system composer if available, else download local composer.phar
 #   - Skip install if vendor/ already exists
 .PHONY: composer
-composer:
-ifeq (, $(composer))
-	@echo "No composer command available, downloading a copy from the web"
-	mkdir -p $(build_tools_directory)
-	curl -sS https://getcomposer.org/installer | php
-	mv composer.phar $(composer_phar)
-endif
+composer: $(if $(composer),, $(composer_phar))
 ifneq ("$(wildcard vendor)","")
 	@echo "Vendor directory already exists, skipping composer install"
 else
 	@echo "Installing composer dependencies..."
-	$(if $(composer),$(composer),php $(composer_phar)) install --prefer-dist
+	$(composer_bin) install --prefer-dist
 endif
 
 # Ensure a local pnpm wrapper exists if pnpm is not installed globally.
@@ -203,9 +204,9 @@ test: composer
 # lint:
 #   - Lint JS via pnpm and PHP via composer script "lint"
 .PHONY: lint
-lint: $(pnpm_wrapper)
-	$(pnpm_cmd) lint
-	$(composer_phar) run lint
+lint:
+	pnpm lint
+	$(composer_bin) run lint
 
 # php-cs-fixer:
 #   - Fix staged PHP files with PHP-CS-Fixer shim (checks syntax first)
@@ -224,9 +225,9 @@ php-cs-fixer:
 # format:
 #   - Format JS and PHP (composer script "cs:fix")
 .PHONY: format
-format: $(pnpm_wrapper)
-	$(pnpm_cmd) format
-	PHP_CS_FIXER_IGNORE_ENV=true $(composer_phar) run cs:fix
+format:
+	pnpm format
+	PHP_CS_FIXER_IGNORE_ENV=true $(composer_bin) run cs:fix
 
 # openapi:
 #   - Generate OpenAPI spec via composer script "openapi"
@@ -234,7 +235,7 @@ format: $(pnpm_wrapper)
 .PHONY: openapi
 openapi:
 	@echo "\x1b[33mGenerating OpenAPI documentation...\x1b[0m"
-	$(if $(composer),$(composer),php $(composer_phar)) run openapi
+	$(composer_bin) run openapi
 	@echo "\x1b[32mOpenAPI documentation generated at build/openapi/openapi.json\x1b[0m"
 
 # csr:
