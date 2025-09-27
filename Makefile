@@ -201,6 +201,12 @@ test: composer
 	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
 	( test ! -f tests/phpunit.integration.xml ) || $(CURDIR)/vendor/phpunit/phpunit/phpunit -c tests/phpunit.integration.xml
 
+# test-docker:
+#  - Run PHP unit tests inside a Nextcloud Docker container
+.PHONY: test-docker
+test-docker:
+	docker-compose exec nextcloud phpunit -c apps-shared/autocurrency/tests/phpunit.xml
+
 # lint:
 #   - Lint JS via pnpm and PHP via composer script "lint"
 .PHONY: lint
@@ -320,7 +326,7 @@ release:
 		rm -f "$${TMPF}"; \
 		exit 1; \
 	fi; \
-	echo "\x1b[33mSigning with key $$KEY_FILE\x1b0m"; \
+	echo "\x1b[33mSigning with key $$KEY_FILE\x1b[0m"; \
 	echo; \
 	SIGNATURE="$$(openssl dgst -sha512 -sign "$$KEY_FILE" "$${TMPF}" | openssl base64 | tr -d '\n')"; \
 	rm -f "$${TMPF}"; \
