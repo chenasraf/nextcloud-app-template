@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@nextcloud/axios':
-        specifier: ^2.5.1
-        version: 2.5.1
+        specifier: ^2.5.2
+        version: 2.5.2
       '@nextcloud/l10n':
         specifier: ^3.4.0
         version: 3.4.0
@@ -481,9 +481,9 @@ packages:
     resolution: {integrity: sha512-1dr+Xhvg2QtsFC23KFXJSkU524EVgI/+WFBGTZ8tFa+9hmcZ3CqZIHjtXm3KxUvezwAY5023Ml0n2vpdYkpBXQ==}
     engines: {node: ^20.0.0 || ^22.0.0 || ^24.0.0}
 
-  '@nextcloud/axios@2.5.1':
-    resolution: {integrity: sha512-AA7BPF/rsOZWAiVxqlobGSdD67AEwjOnymZCKUIwEIBArKxYK7OQEqcILDjQwgj6G0e/Vg9Y8zTVsPZp+mlvwA==}
-    engines: {node: ^20.0.0, npm: ^10.0.0}
+  '@nextcloud/axios@2.5.2':
+    resolution: {integrity: sha512-8frJb77jNMbz00TjsSqs1PymY0nIEbNM4mVmwen2tXY7wNgRai6uXilIlXKOYB9jR/F/HKRj6B4vUwVwZbhdbw==}
+    engines: {node: ^20.0.0 || ^22.0.0 || ^24.0.0}
 
   '@nextcloud/browser-storage@0.4.0':
     resolution: {integrity: sha512-D6XxznxCYmJ3oBCC3p0JB6GZJ2RZ9dgbB1UqtTePXrIvHUMBAeF/YkiGKYxLAVZCZb+NSNZXgAYHm/3LnIUbDg==}
@@ -4266,7 +4266,7 @@ snapshots:
       '@nextcloud/browser-storage': 0.4.0
       '@nextcloud/event-bus': 3.3.2
 
-  '@nextcloud/axios@2.5.1':
+  '@nextcloud/axios@2.5.2':
     dependencies:
       '@nextcloud/auth': 2.5.2
       '@nextcloud/router': 3.0.1
@@ -4408,7 +4408,7 @@ snapshots:
       '@ckpack/vue-color': 1.6.0(vue@3.5.21(typescript@5.9.2))
       '@floating-ui/dom': 1.7.4
       '@nextcloud/auth': 2.5.2
-      '@nextcloud/axios': 2.5.1
+      '@nextcloud/axios': 2.5.2
       '@nextcloud/browser-storage': 0.4.0
       '@nextcloud/capabilities': 1.2.0
       '@nextcloud/event-bus': 3.3.2
