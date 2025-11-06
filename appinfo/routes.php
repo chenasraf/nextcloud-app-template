@@ -10,6 +10,7 @@ declare(strict_types=1);
 return [
 	'routes' => [
 		// SPA catch-all routes - serve the main template for all sub-paths
-		['name' => 'page#index', 'url' => '/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.*']],
+		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+		['name' => 'page#catchAll', 'url' => '/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.*']],
 	],
 ];

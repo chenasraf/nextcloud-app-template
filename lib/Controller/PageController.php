@@ -35,9 +35,22 @@ class PageController extends Controller {
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
 	public function index(): TemplateResponse {
-		$this->logger->info('NextcloudAppTemplate main page loaded');
+		$this->logger->info('Forum main page loaded');
 		return new TemplateResponse(Application::APP_ID, 'app', [
 			'script' => 'app',
 		]);
+	}
+
+	/**
+	 * Main app page - catch all route
+	 *
+	 * @return TemplateResponse<Http::STATUS_OK,array{}>
+	 *
+	 * 200: OK
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function catchAll(string $path = ''): TemplateResponse {
+		return $this->index();
 	}
 }
