@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+// SPDX-FileCopyrightText: Your Name <your@email.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\NextcloudAppTemplate\Settings;
 
 use OCA\NextcloudAppTemplate\AppInfo\Application;

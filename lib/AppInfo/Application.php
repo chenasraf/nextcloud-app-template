@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// SPDX-FileCopyrightText: Your Name <your@email.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\NextcloudAppTemplate\AppInfo;
 
 use OCP\AppFramework\App;
@@ -24,5 +27,9 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
+	}
+
+	public static function tableName(string $table): string {
+		return self::APP_ID . '_' . $table;
 	}
 }
