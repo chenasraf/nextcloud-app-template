@@ -205,7 +205,7 @@ test: composer
 #  - Run PHP unit tests inside a Nextcloud Docker container
 .PHONY: test-docker
 test-docker:
-	docker-compose exec nextcloud phpunit -c apps-shared/autocurrency/tests/phpunit.xml
+	docker-compose exec nextcloud phpunit -c apps-shared/$(app_name)/tests/phpunit.xml
 
 # lint:
 #   - Lint JS via pnpm and PHP via composer script "lint"
