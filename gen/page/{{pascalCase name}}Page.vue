@@ -1,7 +1,5 @@
 <template>
-
-  <div class="jukebox-{{ kebabCase name }}">{{ startCase name }} Page</div>
-
+  <div class="mynextcloudapp-{{ kebabCase name }}">{{ startCase name }} Page</div>
 </template>
 
 <script>
@@ -20,8 +18,7 @@ export default {
 
 <style scoped lang="scss">
 /*
-#jukebox-{{ kebabCase name }} {
+#mynextcloudapp-{{ kebabCase name }} {
 }
 */
 </style>
-
