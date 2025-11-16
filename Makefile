@@ -147,7 +147,7 @@ source:
 		--exclude="**/.git/**/*" \
 		--exclude="build" \
 		--exclude="tests" \
-		--exclude="src" \
+		--exclude="/src" \
 		--exclude="js/node_modules" \
 		--exclude="node_modules" \
 		--exclude="*.log" \
@@ -189,7 +189,7 @@ appstore:
 		--exclude="protractor\.*" \
 		--exclude=".*" \
 		--exclude="dist/js/.*" \
-		--exclude="src" \
+		--exclude="/src" \
 		$(CURDIR)/ $(app_intermediate_directory)
 	cd $(app_intermediate_directory) && \
 	tar czf $(appstore_package_name).tar.gz ../$(app_name)
