@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-// SPDX-FileCopyrightText: Your Name <your@email.com>
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 namespace OCA\NextcloudAppTemplate\Controller;
 
 use OCA\NextcloudAppTemplate\AppInfo\Application;
@@ -21,7 +18,6 @@ class PageController extends Controller {
 		IRequest $request,
 		private LoggerInterface $logger,
 	) {
-		$this->logger->info('NextcloudAppTemplate page controller loaded');
 		parent::__construct($appName, $request);
 	}
 
@@ -35,9 +31,9 @@ class PageController extends Controller {
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
 	public function index(): TemplateResponse {
-		$this->logger->info('Forum main page loaded');
 		return new TemplateResponse(Application::APP_ID, 'app', [
-			'script' => 'app',
+			'script' => Application::getViteEntryScript('app.ts'),
+			'style' => Application::getViteEntryScript('style.css'),
 		]);
 	}
 
