@@ -21,8 +21,8 @@ importers:
         specifier: 2.3.5
         version: 2.3.5(@types/node@20.17.10)(browserslist@4.28.0)(picomatch@4.0.3)(rollup@4.53.3)(sass@1.94.2)(typescript@5.9.2)(vite@6.4.1(@types/node@20.17.10)(sass-embedded@1.93.3)(sass@1.94.2)(yaml@2.8.1))(vue@3.5.24(typescript@5.9.2))
       '@nextcloud/vue':
-        specifier: ^9.2.0
-        version: 9.2.0(typescript@5.9.2)
+        specifier: ^9.3.0
+        version: 9.3.0(typescript@5.9.2)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -590,8 +590,8 @@ packages:
       sass: '>=1.60'
       vite: ^5 || ^6
 
-  '@nextcloud/vue@9.2.0':
-    resolution: {integrity: sha512-K2RXGqpHcMe8a0peBKaLpnDAql1AwXoP6fX4jxy26leXY2szXYRlaCuVfCY4jdZtRnVZ7746hsud6PepJbk0Xw==}
+  '@nextcloud/vue@9.3.0':
+    resolution: {integrity: sha512-aeRZGqZMwtW62ASxmMsi7H5rnk9Sof3tmlBk7HfScawQzNlkQwquqLRH1h2miRsUGRTkrTgCLcQlQKUQXxQ3YQ==}
     engines: {node: ^20.11.0 || ^22 || ^24}
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
@@ -1309,8 +1309,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.8.29:
-    resolution: {integrity: sha512-sXdt2elaVnhpDNRDz+1BDx1JQoJRuNk7oVlAlbGiFkLikHCAQiccexF/9e91zVi6RCgqspl04aP+6Cnl9zRLrA==}
+  baseline-browser-mapping@2.8.30:
+    resolution: {integrity: sha512-aTUKW4ptQhS64+v2d6IkPzymEzzhw+G0bA1g3uBRV3+ntkH+svttKseW5IOR4Ed6NUVKqnY7qT3dKvzQ7io4AA==}
     hasBin: true
 
   blurhash@2.0.5:
@@ -1694,8 +1694,8 @@ packages:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
 
-  electron-to-chromium@1.5.258:
-    resolution: {integrity: sha512-rHUggNV5jKQ0sSdWwlaRDkFc3/rRJIVnOSe9yR4zrR07m3ZxhP4N27Hlg8VeJGGYgFTxK5NqDmWI4DSH72vIJg==}
+  electron-to-chromium@1.5.259:
+    resolution: {integrity: sha512-I+oLXgpEJzD6Cwuwt1gYjxsDmu/S/Kd41mmLA3O+/uH2pFRO/DvOjUyGozL8j3KeLV6WyZ7ssPwELMsXCcsJAQ==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -4528,7 +4528,7 @@ snapshots:
       - typescript
       - vue
 
-  '@nextcloud/vue@9.2.0(typescript@5.9.2)':
+  '@nextcloud/vue@9.3.0(typescript@5.9.2)':
     dependencies:
       '@ckpack/vue-color': 1.6.0(vue@3.5.24(typescript@5.9.2))
       '@floating-ui/dom': 1.7.4
@@ -5338,7 +5338,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.8.29: {}
+  baseline-browser-mapping@2.8.30: {}
 
   blurhash@2.0.5: {}
 
@@ -5418,9 +5418,9 @@ snapshots:
 
   browserslist@4.28.0:
     dependencies:
-      baseline-browser-mapping: 2.8.29
+      baseline-browser-mapping: 2.8.30
       caniuse-lite: 1.0.30001756
-      electron-to-chromium: 1.5.258
+      electron-to-chromium: 1.5.259
       node-releases: 2.0.27
       update-browserslist-db: 1.1.4(browserslist@4.28.0)
 
@@ -5744,7 +5744,7 @@ snapshots:
       es-errors: 1.3.0
       gopd: 1.2.0
 
-  electron-to-chromium@1.5.258: {}
+  electron-to-chromium@1.5.259: {}
 
   elliptic@6.6.1:
     dependencies:
