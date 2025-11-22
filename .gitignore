@@ -12,7 +12,6 @@
 /js
 /css
 .DS_Store
-composer.lock
 build/
 tsconfig.app.tsbuildinfo
 .env
