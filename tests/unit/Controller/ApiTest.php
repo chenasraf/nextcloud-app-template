@@ -9,27 +9,46 @@ use OCA\NextcloudAppTemplate\Controller\ApiController;
 use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\IRequest;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ApiTest extends TestCase {
-	public function testGetHello(): void {
-		$request = $this->createMock(IRequest::class);
-		$config = $this->createMock(IAppConfig::class);
-		$l10n = $this->createMock(IL10N::class);
+	private ApiController $controller;
+	/** @var IRequest&MockObject */
+	private IRequest $request;
+	/** @var IAppConfig&MockObject */
+	private IAppConfig $config;
+	/** @var IL10N&MockObject */
+	private IL10N $l10n;
 
-		// Mock config to return empty string (no previous hello)
-		$config->method('getValueString')
-			->willReturn('');
+	protected function setUp(): void {
+		$this->request = $this->createMock(IRequest::class);
+		$this->config = $this->createMock(IAppConfig::class);
+		$this->l10n = $this->createMock(IL10N::class);
 
-		// Mock translation to return a simple string
-		$l10n->method('t')
+		// Mock translation to return a simple string by default
+		$this->l10n->method('t')
 			->willReturnCallback(function ($text, $params = []) {
-				return $text;
+				if (empty($params)) {
+					return $text;
+				}
+				return vsprintf(str_replace('%s', '%s', $text), $params);
 			});
 
-		$controller = new ApiController(Application::APP_ID, $request, $config, $l10n);
+		$this->controller = new ApiController(
+			Application::APP_ID,
+			$this->request,
+			$this->config,
+			$this->l10n
+		);
+	}
 
-		$resp = $controller->getHello()->getData();
+	public function testGetHello(): void {
+		// Mock config to return empty string (no previous hello)
+		$this->config->method('getValueString')
+			->willReturn('');
+
+		$resp = $this->controller->getHello()->getData();
 
 		$this->assertIsArray($resp);
 		$this->assertArrayHasKey('message', $resp);
@@ -39,26 +58,11 @@ class ApiTest extends TestCase {
 	}
 
 	public function testPostHello(): void {
-		$request = $this->createMock(IRequest::class);
-		$config = $this->createMock(IAppConfig::class);
-		$l10n = $this->createMock(IL10N::class);
-
-		// Mock translation to return formatted string
-		$l10n->method('t')
-			->willReturnCallback(function ($text, $params = []) {
-				if (empty($params)) {
-					return $text;
-				}
-				return vsprintf(str_replace('%s', '%s', $text), $params);
-			});
-
 		// Expect setValueString to be called to save the timestamp
-		$config->expects($this->once())
+		$this->config->expects($this->once())
 			->method('setValueString');
 
-		$controller = new ApiController(Application::APP_ID, $request, $config, $l10n);
-
-		$resp = $controller->postHello([
+		$resp = $this->controller->postHello([
 			'name' => 'World',
 			'theme' => 'dark',
 			'items' => ['item1', 'item2'],
