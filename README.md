@@ -36,6 +36,7 @@ Once you have it cloned on your machine:
   - [Tips & gotchas](#tips--gotchas)
 - [GitHub Workflows](#github-workflows)
 - [Project layout](#project-layout)
+- [Testing](#testing)
 - [Release Please (automated versioning & releases)](#release-please-automated-versioning--releases)
 - [Resources](#resources)
 
@@ -295,6 +296,271 @@ them to `.github/workflows/`** so Actions start running automatically.
 ├─ version.txt                  # App version (used by sign/release targets)
 └─ rename-template.sh           # One-time renamer script for template cloning
 ```
+
+## Testing
+
+### Frontend Testing
+
+This template includes a complete frontend testing setup using [Vitest](https://vitest.dev/) and
+[Vue Test Utils](https://test-utils.vuejs.org/).
+
+#### Running tests
+
+```bash
+# Run tests in watch mode (recommended during development)
+pnpm test
+
+# Run tests once (useful for CI)
+pnpm test:run
+```
+
+#### Test file structure
+
+Test files are placed next to the files they test, using the `.test.ts` suffix:
+
+```
+src/
+├─ utils/
+│  ├─ string.ts           # Utility functions
+│  └─ string.test.ts      # Tests for string.ts
+├─ components/
+│  ├─ StatusBadge.vue     # Vue component
+│  └─ StatusBadge.test.ts # Tests for StatusBadge.vue
+```
+
+#### Writing tests
+
+##### Pure TypeScript/utility functions
+
+For utility functions, use the standard `describe`/`it`/`expect` pattern:
+
+```typescript
+import { describe, expect, it } from 'vitest'
+import { myFunction } from './myModule'
+
+describe('myFunction', () => {
+  it('handles normal input', () => {
+    expect(myFunction('hello')).toBe('HELLO')
+  })
+
+  it('handles null input', () => {
+    expect(myFunction(null)).toBe('')
+  })
+})
+```
+
+##### Vue components
+
+For Vue components, you'll need to mock Nextcloud dependencies. Here's a typical pattern:
+
+```typescript
+import { mount } from '@vue/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+import MyComponent from './MyComponent.vue'
+
+// Mock @nextcloud/l10n
+vi.mock('@nextcloud/l10n', () => ({
+  t: (app: string, text: string, vars?: Record<string, unknown>) => {
+    if (vars) {
+      return Object.entries(vars).reduce(
+        (acc, [key, value]) => acc.replace(`{${key}}`, String(value)),
+        text,
+      )
+    }
+    return text
+  },
+  n: (app: string, singular: string, plural: string, count: number) => {
+    return count === 1 ? singular : plural
+  },
+}))
+
+// Mock Nextcloud Vue components
+vi.mock('@nextcloud/vue/components/NcButton', () => ({
+  default: {
+    name: 'NcButton',
+    template:
+      '<button :disabled="disabled" @click="$emit(\'click\')"><slot /><slot name="icon" /></button>',
+    props: ['variant', 'disabled', 'ariaLabel', 'title'],
+  },
+}))
+
+// Mock icon components
+vi.mock('@icons/Check.vue', () => ({
+  default: { name: 'CheckIcon', template: '<span />', props: ['size'] },
+}))
+
+describe('MyComponent', () => {
+  it('renders with props', () => {
+    const wrapper = mount(MyComponent, {
+      props: { title: 'Hello' },
+    })
+    expect(wrapper.text()).toContain('Hello')
+  })
+
+  it('emits events', async () => {
+    const wrapper = mount(MyComponent, {
+      props: { clickable: true },
+    })
+    await wrapper.trigger('click')
+    expect(wrapper.emitted('click')).toBeTruthy()
+  })
+
+  it('computes values correctly', () => {
+    const wrapper = mount(MyComponent, {
+      props: { count: 5 },
+    })
+    // Access computed properties via wrapper.vm
+    expect((wrapper.vm as InstanceType<typeof MyComponent>).doubleCount).toBe(10)
+  })
+})
+```
+
+#### Tips
+
+- **Test file location**: Place test files next to the files they test (e.g., `Component.test.ts`
+  next to `Component.vue`)
+- **TypeScript errors**: You may see "Cannot find module './Component.vue'" errors in test files.
+  These can be ignored as Vitest handles Vue files correctly at runtime
+- **Mocking**: Keep mocks minimal - only mock what's necessary for the test to run
+- **happy-dom**: This template uses happy-dom instead of jsdom for faster test execution. Note that
+  happy-dom preserves hex colors (e.g., `#ff5500`) rather than converting to RGB
+- **Globals**: The vitest config enables globals, so you don't need to import `describe`, `it`,
+  `expect` in every file (though explicit imports are recommended for clarity)
+
+#### Resources
+
+- [Vitest documentation](https://vitest.dev/)
+- [Vue Test Utils documentation](https://test-utils.vuejs.org/)
+- [Testing Vue 3 components](https://test-utils.vuejs.org/guide/)
+
+### Backend Testing (PHP)
+
+This template uses [PHPUnit](https://phpunit.de/) for PHP unit testing, integrated with the
+Nextcloud testing framework.
+
+#### Running PHP tests
+
+There are two ways to run PHP tests:
+
+**Option 1: Docker (recommended)**
+
+```bash
+make test-docker
+```
+
+This automatically finds a running Nextcloud container and runs tests inside it. Works with
+[nextcloud-docker-dev](https://github.com/juliushaertl/nextcloud-docker-dev) and similar setups.
+
+**Option 2: Local Nextcloud installation**
+
+```bash
+# Set NEXTCLOUD_ROOT to your Nextcloud server path
+NEXTCLOUD_ROOT=~/path/to/nextcloud make test
+
+# Or set it in the Makefile (line 47) for convenience
+make test
+```
+
+#### Test file structure
+
+PHP tests live in the `tests/` directory:
+
+```
+tests/
+├─ unit/
+│  └─ Controller/
+│     └─ ApiTest.php      # Unit tests for ApiController
+├─ bootstrap.php          # Test bootstrap (loads Nextcloud environment)
+├─ phpunit.xml            # PHPUnit config for local testing
+└─ phpunit.docker.xml     # PHPUnit config for Docker testing
+```
+
+#### Writing PHP tests
+
+Here's an example test showing how to mock Nextcloud dependencies:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Controller;
+
+use OCA\YourApp\AppInfo\Application;
+use OCA\YourApp\Controller\ApiController;
+use OCP\IAppConfig;
+use OCP\IL10N;
+use OCP\IRequest;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+
+class ApiTest extends TestCase {
+    private ApiController $controller;
+    /** @var IRequest&MockObject */
+    private IRequest $request;
+    /** @var IAppConfig&MockObject */
+    private IAppConfig $config;
+    /** @var IL10N&MockObject */
+    private IL10N $l10n;
+
+    protected function setUp(): void {
+        $this->request = $this->createMock(IRequest::class);
+        $this->config = $this->createMock(IAppConfig::class);
+        $this->l10n = $this->createMock(IL10N::class);
+
+        // Mock translation to return the input string
+        $this->l10n->method('t')
+            ->willReturnCallback(function ($text, $params = []) {
+                if (empty($params)) {
+                    return $text;
+                }
+                return vsprintf($text, $params);
+            });
+
+        $this->controller = new ApiController(
+            Application::APP_ID,
+            $this->request,
+            $this->config,
+            $this->l10n
+        );
+    }
+
+    public function testGetHello(): void {
+        $this->config->method('getValueString')
+            ->willReturn('');
+
+        $resp = $this->controller->getHello()->getData();
+
+        $this->assertIsArray($resp);
+        $this->assertArrayHasKey('message', $resp);
+    }
+
+    public function testPostHello(): void {
+        $this->config->expects($this->once())
+            ->method('setValueString');
+
+        $resp = $this->controller->postHello([
+            'name' => 'World',
+        ])->getData();
+
+        $this->assertStringContainsString('World', $resp['message']);
+    }
+}
+```
+
+#### Tips
+
+- **Mocking**: Use `$this->createMock()` for Nextcloud interfaces like `IRequest`, `IAppConfig`,
+  `IL10N`, etc.
+- **Test isolation**: Each test should be independent; use `setUp()` to create fresh mocks
+- **Naming convention**: Test files should end with `Test.php` (e.g., `ApiTest.php`)
+- **Docker vs local**: Docker testing is more reliable as it uses a fully configured Nextcloud
+  environment
+
+#### Resources
+
+- [PHPUnit documentation](https://docs.phpunit.de/)
+- [Nextcloud app testing guide](https://docs.nextcloud.com/server/latest/developer_manual/digging_deeper/testing.html)
 
 ## Release Please (automated versioning & releases)
 

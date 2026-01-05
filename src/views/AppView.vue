@@ -86,8 +86,9 @@
       <table>
         <thead>
           <tr>
-            <th style="width: 50%">{{ strings.colMessage }}</th>
-            <th style="width: 30%">{{ strings.colAt }}</th>
+            <th style="width: 40%">{{ strings.colMessage }}</th>
+            <th style="width: 15%">{{ strings.colStatus }}</th>
+            <th style="width: 25%">{{ strings.colAt }}</th>
             <th style="width: 20%">{{ strings.colActions }}</th>
           </tr>
         </thead>
@@ -95,6 +96,12 @@
           <tr v-for="(hello, idx) in filteredHellos" :key="hello.id">
             <td class="ellipsis">
               <span class="mono">{{ hello.message }}</span>
+            </td>
+            <td>
+              <StatusBadge
+                :status="hello.synced ? 'success' : 'pending'"
+                :label="hello.synced ? strings.statusSynced : strings.statusLocal"
+              />
             </td>
             <td class="nowrap">
               <NcDateTime v-if="hello.at" :timestamp="new Date(hello.at).valueOf()" />
@@ -136,6 +143,7 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 
+import StatusBadge from '@/components/StatusBadge.vue'
 import { ocs } from '@/axios'
 import { t, n } from '@nextcloud/l10n'
 
@@ -149,6 +157,7 @@ export default {
     NcEmptyContent,
     NcLoadingIcon,
     NcDateTime,
+    StatusBadge,
   },
   data() {
     return {
@@ -205,8 +214,11 @@ export default {
         emptyDesc: t('nextcloudapptemplate', 'Try adding one using the form above.'),
         addExample: t('nextcloudapptemplate', 'Add example'),
         colMessage: t('nextcloudapptemplate', 'Message'),
+        colStatus: t('nextcloudapptemplate', 'Status'),
         colAt: t('nextcloudapptemplate', 'Time'),
         colActions: t('nextcloudapptemplate', 'Actions'),
+        statusSynced: t('nextcloudapptemplate', 'Synced'),
+        statusLocal: t('nextcloudapptemplate', 'Local'),
         duplicate: t('nextcloudapptemplate', 'Duplicate'),
         remove: t('nextcloudapptemplate', 'Remove'),
         clearAll: t('nextcloudapptemplate', 'Clear all'),
@@ -257,6 +269,7 @@ export default {
             id: genId(),
             message: data.message,
             at: data.at ?? null,
+            synced: true,
           })
         }
       } catch (e) {
@@ -282,7 +295,7 @@ export default {
         const data = resp.data
         const message = data?.message ?? `Hello, ${name}!`
         const at = data?.at ?? new Date().toISOString()
-        this.hellos.unshift({ id: genId(), message, at })
+        this.hellos.unshift({ id: genId(), message, at, synced: true })
         this.clearForm()
         this.formOpen = false
       } catch (e) {
@@ -295,7 +308,8 @@ export default {
     duplicate(index) {
       const src = this.hellos[index]
       if (!src) return
-      this.hellos.splice(index + 1, 0, { ...src, id: genId() })
+      // Duplicated items are local-only until synced
+      this.hellos.splice(index + 1, 0, { ...src, id: genId(), synced: false })
     },
 
     remove(index) {
@@ -307,10 +321,12 @@ export default {
     },
 
     seedOne() {
+      // Seeded examples are local-only
       this.hellos.push({
         id: genId(),
         message: '👋 Hello example',
         at: new Date().toISOString(),
+        synced: false,
       })
     },
   },

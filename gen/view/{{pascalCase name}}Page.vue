@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComopnent, type PropType } from 'vue'
-// import NcComponentExample from '@nextcloud/vue/dist/Components/NcComponentExample.js'
+// import NcComponentExample from '@nextcloud/vue/components/NcComponentExample'
 
 // import IconExample from '@icons/Example.vue'
 
