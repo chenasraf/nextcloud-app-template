@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Your Name <your@email.com>
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
   <div class="mynextcloudapp-{{ kebabCase name }}">{{ startCase name }} Page</div>
 </template>
