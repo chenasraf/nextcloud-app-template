@@ -1,17 +1,17 @@
 {
-  "name": "nextcloud/forum",
-  "description": "A community-driven forum built right into your Nextcloud instance",
+  "name": "your-user/nextcloudapptemplate",
+  "description": "Nextcloud App Template",
   "license": "AGPL-3.0-or-later",
   "authors": [
     {
-      "name": "Chen Asraf",
-      "email": "contact@casraf.dev",
-      "homepage": "https://casraf.dev"
+      "name": "Your Name",
+      "email": "your@email.com",
+      "homepage": "https://your.website"
     }
   ],
   "autoload": {
     "psr-4": {
-      "OCA\\Forum\\": "lib/"
+      "OCA\\NextcloudAppTemplate\\": "lib/"
     }
   },
   "scripts": {
@@ -23,8 +23,7 @@
     "openapi": "generate-spec"
   },
   "require": {
-    "php": "^8.1",
-    "chriskonnertz/bbcode": "^1.1"
+    "php": "^8.1"
   },
   "require-dev": {
     "bamarni/composer-bin-plugin": "^1.8",
